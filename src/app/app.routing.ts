@@ -20,6 +20,21 @@ export const AppRoutes: Routes = [
     ],
   },
   {
+    path: 'auth',
+    component: FullComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: '/auth',
+        pathMatch: 'full',
+      },
+      {
+        path: 'auth',
+        loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
+      },
+    ],
+  },
+  {
     path: '',
     component: BlankComponent,
     children: [
