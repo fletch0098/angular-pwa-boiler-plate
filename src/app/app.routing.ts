@@ -13,11 +13,10 @@ export const AppRoutes: Routes = [
         redirectTo: '/dashboard',
         pathMatch: 'full',
       },
-      // {
-      //   path: 'dashboard',
-      //   loadChildren: () =>
-      //     import('./dashboard/dashboard.module').then(m => m.DashboardModule)
-      // }
+      {
+        path: 'dashboard',
+        loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
+      },
     ],
   },
   {
