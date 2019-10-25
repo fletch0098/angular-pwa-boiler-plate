@@ -14,7 +14,8 @@ import { AppComponent } from './app.component'
 import { SharedModule } from './shared/modules/shared.module'
 
 import { LocalStorageService } from './local-storage.service'
-import { RouteReusableStrategy } from './route-reusable-strategy'
+import { RouteReusableStrategy } from './route-reusable-strategy';
+import { GraphQLModule } from './graphql.module'
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +26,7 @@ import { RouteReusableStrategy } from './route-reusable-strategy'
     RouterModule.forRoot(AppRoutes),
     SharedModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    GraphQLModule,
   ],
   providers: [
     LocalStorageService,
