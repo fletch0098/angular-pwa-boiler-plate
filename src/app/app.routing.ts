@@ -1,50 +1,38 @@
 import { Routes } from '@angular/router'
 
 import { BlankComponent } from './shared/components/blank/blank.component'
-import { FullComponent } from './shared/components/full/full.component'
+import { MenuLayoutComponent } from './shared/components/menu/menu.component'
+import { FullLayoutComponent } from './shared/components/full/full.component'
 
 export const AppRoutes: Routes = [
   {
     path: '',
-    component: FullComponent,
+    component: MenuLayoutComponent,
     children: [
       {
         path: '',
-        redirectTo: '/dashboard',
+        redirectTo: '/home',
         pathMatch: 'full',
       },
       {
-        path: 'dashboard',
-        loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
-      },
-    ],
-  },
-  {
-    path: 'auth',
-    component: FullComponent,
-    children: [
-      {
-        path: '',
-        redirectTo: '/auth',
-        pathMatch: 'full',
-      },
-      {
-        path: 'auth',
-        loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
+        path: 'home',
+        loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
       },
     ],
   },
   {
     path: '',
-    component: BlankComponent,
+    component: FullLayoutComponent,
     children: [
       // {
       //   path: '',
-      //   loadChildren: () =>
-      //     import('./authentication/authentication.module').then(
-      //       m => m.AuthenticationModule
-      //     )
-      // }
+      //   redirectTo: '/auth',
+      //   pathMatch: 'full',
+      // },
+      {
+        path: 'auth',
+        loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
+      },
     ],
   },
   {
