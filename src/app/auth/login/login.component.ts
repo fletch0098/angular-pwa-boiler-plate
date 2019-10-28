@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
-import { environment } from 'src/environments/environment'
+import { AuthService } from '../auth.service'
 
 @Component({
   selector: 'login',
@@ -23,7 +23,7 @@ export class LogInComponent {
     return this.signinForm.get('password')
   }
 
-  constructor(private _router: Router) {}
+  constructor(private _router: Router, private authService: AuthService) {}
 
   getEmailInputError() {
     if (this.emailInput.hasError('email')) {
@@ -41,7 +41,18 @@ export class LogInComponent {
   }
 
   signIn() {
-    // this._loader.show();
-    console.log('signIn()')
+    let credentials = {
+      username: this.emailInput.value,
+      password: this.passwordInput.value,
+    }
+
+    this.authService.login(credentials).subscribe(
+      result => {
+        console.log('logged in', result)
+      },
+      err => {
+        console.log(err)
+      }
+    )
   }
 }

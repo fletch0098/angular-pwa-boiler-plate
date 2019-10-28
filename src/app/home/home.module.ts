@@ -8,8 +8,11 @@ import { HomeRoutes } from './home.routing'
 import { HomeComponent } from './home/home.component'
 import { ExchangeRatesComponent } from './exchange-rates/exchange-rates.component'
 
+import { RateService } from './exchange-rates/rate.service'
+
 @NgModule({
   imports: [SharedModule, CommonModule, RouterModule.forChild(HomeRoutes)],
   declarations: [HomeComponent, ExchangeRatesComponent],
+  providers: [RateService],
 })
 export class HomeModule {}

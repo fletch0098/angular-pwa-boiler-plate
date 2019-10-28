@@ -9,8 +9,11 @@ import { AuthComponent } from './auth/auth.component'
 import { LogInComponent } from './login/login.component'
 import { RegisterComponent } from './register/register.component'
 
+import { AuthService } from './auth.service'
+
 @NgModule({
   imports: [SharedModule, CommonModule, RouterModule.forChild(AuthRoutes)],
   declarations: [AuthComponent, LogInComponent, RegisterComponent],
+  providers: [AuthService],
 })
 export class AuthModule {}

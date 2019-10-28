@@ -13,11 +13,14 @@ import { MaterialModule } from './material.module'
 import { CountryCodeSelectComponent } from '../components/country-code-select/country-code-select.component'
 import { FilterPipe } from '../components/country-code-select/filter.pipe'
 
+import { StorageService } from '../services/storage.service'
+import { Globals } from '../globals'
+
 @NgModule({
   imports: [CommonModule, FormsModule, RouterModule, ReactiveFormsModule, MaterialModule],
   declarations: [SpinnerComponent, BlankComponent, FullLayoutComponent, MenuLayoutComponent, CountryCodeSelectComponent, FilterPipe],
   exports: [SpinnerComponent, BlankComponent, FullLayoutComponent, MenuLayoutComponent, MaterialModule, FormsModule, ReactiveFormsModule],
   entryComponents: [CountryCodeSelectComponent],
-  providers: [],
+  providers: [Globals, StorageService],
 })
 export class SharedModule {}
