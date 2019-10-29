@@ -1,7 +1,7 @@
 <form [formGroup]="signinForm">
   <h2>Log in to your account</h2>
   <mat-form-field>
-    <input matInput placeholder="Email" type="email" formControlName="email" autocomplete="email" required />
+    <input matInput placeholder="Email" type="email" formControlName="email" required />
     <mat-hint *ngIf="!emailInput.value">Enter your email address</mat-hint>
     <mat-error *ngIf="!emailInput.valid">
       {{ getEmailInputError() }}

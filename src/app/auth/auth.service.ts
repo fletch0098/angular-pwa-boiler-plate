@@ -5,7 +5,7 @@ import { Globals } from '../shared/globals'
 import { Apollo } from 'apollo-angular'
 import { Observable, Subscription, throwError, BehaviorSubject } from 'rxjs'
 import { map, tap, catchError } from 'rxjs/operators'
-import { LOGIN } from './auth.gql'
+import { LOGIN, EXCHANGE_REFRESH_TOKEN, CHECK_TOKEN } from './auth.gql'
 import { Login } from './login/login.interface'
 import { User } from '../shared/models/user.model'
 import { LoginResponse } from '../shared/models/loginResponse.interface'
@@ -48,6 +48,55 @@ export class AuthService {
           this.storageService.setAuthorization(response)
           this.loggedInSubject.next(true)
           return result
+        }),
+        catchError(this.handleError)
+      )
+  }
+
+  /**
+   *
+   */
+  checkToken(jwtBearer: string): Observable<any> {
+    return this.apollo
+      .mutate({
+        mutation: CHECK_TOKEN,
+        variables: {
+          input: {
+            jwtBearer,
+          },
+        },
+      })
+      .pipe(
+        tap(_ => console.log('checked token')),
+        map(result => {
+          let response: boolean = result.data['CheckToken']
+          return response
+        }),
+        catchError(this.handleError)
+      )
+  }
+
+  /**
+   *
+   */
+  exchangeRefreshToken(jwtRefresh: string): Observable<any> {
+    return this.apollo
+      .mutate({
+        mutation: EXCHANGE_REFRESH_TOKEN,
+        variables: {
+          input: {
+            jwtRefresh,
+          },
+        },
+      })
+      .pipe(
+        tap(_ => console.log('exchanged token')),
+        map(result => {
+          let response = result.data['ExchangeRefreshToken']
+          let x = this.storageService.getAuthorization()
+          x.jwtBearer = response.jwtBearer
+          this.storageService.setAuthorization(x)
+          return response
         }),
         catchError(this.handleError)
       )
