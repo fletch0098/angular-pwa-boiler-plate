@@ -15,11 +15,14 @@ import { FilterPipe } from '../components/country-code-select/filter.pipe'
 import { StorageService } from '../services/storage.service'
 import { Globals } from '../globals'
 
+import { AppLoaderService } from '../components/app-loader/app-loader.service'
+import { AppLoaderComponent } from '../components/app-loader/app-loader.component'
+
 @NgModule({
   imports: [CommonModule, FormsModule, RouterModule, ReactiveFormsModule, MaterialModule],
-  declarations: [BlankComponent, FullLayoutComponent, MenuLayoutComponent, CountryCodeSelectComponent, FilterPipe],
-  exports: [BlankComponent, FullLayoutComponent, MenuLayoutComponent, MaterialModule, FormsModule, ReactiveFormsModule],
-  entryComponents: [CountryCodeSelectComponent],
-  providers: [Globals, StorageService],
+  declarations: [BlankComponent, FullLayoutComponent, MenuLayoutComponent, CountryCodeSelectComponent, FilterPipe, AppLoaderComponent],
+  exports: [BlankComponent, FullLayoutComponent, MenuLayoutComponent, MaterialModule, FormsModule, ReactiveFormsModule, AppLoaderComponent],
+  entryComponents: [CountryCodeSelectComponent, AppLoaderComponent],
+  providers: [Globals, StorageService, AppLoaderService],
 })
 export class SharedModule {}
