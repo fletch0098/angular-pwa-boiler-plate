@@ -13,9 +13,11 @@ import { DebugService } from './debug/debug.service'
 
 import { RateService } from './exchange-rates/rate.service'
 
+import { HomeService } from './home.service'
+
 @NgModule({
   imports: [SharedModule, CommonModule, RouterModule.forChild(HomeRoutes)],
   declarations: [HomeComponent, ExchangeRatesComponent, DebugComponent],
-  providers: [RateService, DebugService],
+  providers: [RateService, DebugService, HomeService],
 })
 export class HomeModule {}

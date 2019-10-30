@@ -9,12 +9,17 @@ import { setContext } from 'apollo-link-context'
 import { Globals } from './shared/globals'
 import { AuthService } from './auth/auth.service'
 import { StorageService } from './shared/services/storage.service'
+import { Observable, Subscription, throwError, BehaviorSubject } from 'rxjs'
+import { map, tap, catchError, switchMap, filter, take } from 'rxjs/operators'
 
 @NgModule({
   exports: [ApolloModule, HttpLinkModule],
   providers: [AuthService, StorageService],
 })
 export class GraphQLModule {
+  private isRefreshing = false
+  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null)
+
   constructor(
     private apollo: Apollo,
     private httpLink: HttpLink,
@@ -35,16 +40,55 @@ export class GraphQLModule {
 
         if (credentials) {
           //  console.log('auth header')
-          let jwtBearer = credentials.jwtBearer
+          let jwtBearer: any = credentials.jwtBearer
           let isBearerValid = await this.authService.checkToken(jwtBearer).toPromise()
 
           if (!isBearerValid) {
-            jwtBearer = await this.authService
-              .exchangeRefreshToken(credentials.jwtRefresh)
-              .toPromise()
-              .then(res => res.jwtBearer)
+            if (!this.isRefreshing) {
+              console.log('not refreshing')
+              this.isRefreshing = true
+              this.refreshTokenSubject.next(null)
+
+              await this.authService
+                .exchangeRefreshToken(credentials.jwtRefresh)
+                .pipe(
+                  switchMap((token: any) => {
+                    console.log({ token })
+                    this.isRefreshing = false
+                    this.refreshTokenSubject.next(token.jwtBearer)
+                    return token.jwtBearer
+                  })
+                )
+                .toPromise()
+              // .then(res => res['jwtBearer'])
+            } else {
+              console.log('refreshing')
+              jwtBearer = await this.refreshTokenSubject
+                .pipe(
+                  filter(token => token != null),
+                  take(1),
+                  switchMap(jwt => {
+                    console.log({ jwt })
+                    return jwt
+                  })
+                )
+                .toPromise()
+              // .then(res => res['jwtBearer'])
+            }
+
+            // jwtBearer = await this.authService
+            //   .exchangeRefreshToken(credentials.jwtRefresh)
+            //   .toPromise()
+            //   .then(res => res.jwtBearer)
+            return {
+              headers: {
+                ...headers,
+                Authorization: `Bearer ${this.refreshTokenSubject.value}`,
+              },
+            }
           }
 
+          // console.log({ jwtBearer, subjet: this.refreshTokenSubject.value })
           return {
             headers: {
               ...headers,

@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router'
 import { BlankComponent } from '../components/blank/blank.component'
 import { FullLayoutComponent } from '../components/full/full.component'
 import { MenuLayoutComponent } from '../components/menu/menu.component'
-import { SpinnerComponent } from '../components/spinner.component'
 
 import { MaterialModule } from './material.module'
 
@@ -18,8 +17,8 @@ import { Globals } from '../globals'
 
 @NgModule({
   imports: [CommonModule, FormsModule, RouterModule, ReactiveFormsModule, MaterialModule],
-  declarations: [SpinnerComponent, BlankComponent, FullLayoutComponent, MenuLayoutComponent, CountryCodeSelectComponent, FilterPipe],
-  exports: [SpinnerComponent, BlankComponent, FullLayoutComponent, MenuLayoutComponent, MaterialModule, FormsModule, ReactiveFormsModule],
+  declarations: [BlankComponent, FullLayoutComponent, MenuLayoutComponent, CountryCodeSelectComponent, FilterPipe],
+  exports: [BlankComponent, FullLayoutComponent, MenuLayoutComponent, MaterialModule, FormsModule, ReactiveFormsModule],
   entryComponents: [CountryCodeSelectComponent],
   providers: [Globals, StorageService],
 })

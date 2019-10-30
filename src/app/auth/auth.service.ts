@@ -12,6 +12,8 @@ import { LoginResponse } from '../shared/models/loginResponse.interface'
 
 import { StorageService } from '../shared/services/storage.service'
 
+// import * as jwt from 'jsonwebtoken'
+
 @Injectable()
 export class AuthService {
   constructor(private apollo: Apollo, private globals: Globals, private storageService: StorageService) {
@@ -47,6 +49,10 @@ export class AuthService {
           let response: LoginResponse = result.data['LogIn']
           this.storageService.setAuthorization(response)
           this.loggedInSubject.next(true)
+
+          // let decoded = jwt.decode(response.jwtBearer)
+          // console.log(decoded)
+
           return result
         }),
         catchError(this.handleError)
