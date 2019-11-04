@@ -7,6 +7,7 @@ export const environment = {
   debug: true,
   apiUrl: 'http://localhost:1337/',
   apiVersion: 'v1',
+  appTitle: 'angular-pwa-boiler-plate Dev',
 }
 
 /*

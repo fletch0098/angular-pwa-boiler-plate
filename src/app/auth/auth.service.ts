@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 // import { of } from 'rxjs/observable/of';
-import { Vars } from '../shared/vars'
+import { Vars } from '../core/vars'
 import { Apollo } from 'apollo-angular'
 import { Observable, Subscription, throwError, BehaviorSubject } from 'rxjs'
 import { map, tap, catchError } from 'rxjs/operators'
@@ -10,7 +10,7 @@ import { Login } from './login/login.interface'
 import { User } from '../shared/models/user.model'
 import { LoginResponse } from '../shared/models/loginResponse.interface'
 
-import { AuthStorageService } from '../shared/services/auth-storage.service'
+import { AuthStorageService } from '../core/services/auth-storage.service'
 
 // import * as jwt from 'jsonwebtoken'
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Vars } from '../vars'
-import { LoginResponse } from '../models/loginResponse.interface'
+import { LoginResponse } from '../../shared/models/loginResponse.interface'
 import { LocalStorageService } from './local-storage.service'
 
 /**

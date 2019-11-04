@@ -13,4 +13,5 @@ export class Vars {
   graphQlUrl: string = `${this.apiUrl}graphql/`
 
   authStorageKey: `app_auth`
+  appTitle: string = environment.appTitle
 }

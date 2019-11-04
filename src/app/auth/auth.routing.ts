@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router'
 
-import { AuthComponent } from './auth/auth.component'
 import { LogInComponent } from './login/login.component'
 import { RegisterComponent } from './register/register.component'
 

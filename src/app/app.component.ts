@@ -1,10 +1,14 @@
 import { Component } from '@angular/core'
 
+import { Vars } from './core/vars'
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'angular-pwa-boiler-plate'
+  constructor(private vars: Vars) {}
+
+  title = this.vars.appTitle
 }
