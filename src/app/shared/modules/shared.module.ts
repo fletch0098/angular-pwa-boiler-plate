@@ -12,7 +12,8 @@ import { MaterialModule } from './material.module'
 import { CountryCodeSelectComponent } from '../components/country-code-select/country-code-select.component'
 import { FilterPipe } from '../components/country-code-select/filter.pipe'
 
-import { StorageService } from '../services/storage.service'
+import { AuthStorageService } from '../services/auth-storage.service'
+import { LocalStorageService } from '../services/local-storage.service'
 import { Globals } from '../globals'
 
 import { AppLoaderService } from '../components/app-loader/app-loader.service'
@@ -23,6 +24,6 @@ import { AppLoaderComponent } from '../components/app-loader/app-loader.componen
   declarations: [BlankComponent, FullLayoutComponent, MenuLayoutComponent, CountryCodeSelectComponent, FilterPipe, AppLoaderComponent],
   exports: [BlankComponent, FullLayoutComponent, MenuLayoutComponent, MaterialModule, FormsModule, ReactiveFormsModule, AppLoaderComponent],
   entryComponents: [CountryCodeSelectComponent, AppLoaderComponent],
-  providers: [Globals, StorageService, AppLoaderService],
+  providers: [Globals, LocalStorageService, AuthStorageService, AppLoaderService],
 })
 export class SharedModule {}

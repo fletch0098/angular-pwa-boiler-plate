@@ -10,14 +10,14 @@ import { Login } from './login/login.interface'
 import { User } from '../shared/models/user.model'
 import { LoginResponse } from '../shared/models/loginResponse.interface'
 
-import { StorageService } from '../shared/services/storage.service'
+import { AuthStorageService } from '../shared/services/auth-storage.service'
 
 // import * as jwt from 'jsonwebtoken'
 
 @Injectable()
 export class AuthService {
-  constructor(private apollo: Apollo, private globals: Globals, private storageService: StorageService) {
-    this.loggedInSubject = new BehaviorSubject<Boolean>(this.storageService.getAuthorization() ? true : false)
+  constructor(private apollo: Apollo, private globals: Globals, private authStorageService: AuthStorageService) {
+    this.loggedInSubject = new BehaviorSubject<Boolean>(this.authStorageService.getAuthorizationCredentials() ? true : false)
     this.loggedIn = this.loggedInSubject.asObservable()
   }
 
@@ -47,7 +47,7 @@ export class AuthService {
         tap(_ => console.log('Logged in user')),
         map(result => {
           let response: LoginResponse = result.data['LogIn']
-          this.storageService.setAuthorization(response)
+          this.authStorageService.setAuthorizationCredentials(response)
           this.loggedInSubject.next(true)
 
           // let decoded = jwt.decode(response.jwtBearer)
@@ -99,9 +99,9 @@ export class AuthService {
         tap(_ => console.log('exchanged token')),
         map(result => {
           let response = result.data['ExchangeRefreshToken']
-          let x = this.storageService.getAuthorization()
+          let x = this.authStorageService.getAuthorizationCredentials()
           x.jwtBearer = response.jwtBearer
-          this.storageService.setAuthorization(x)
+          this.authStorageService.setAuthorizationCredentials(x)
           return response
         }),
         catchError(this.handleError)
@@ -112,7 +112,7 @@ export class AuthService {
    *
    */
   logOut(): void {
-    this.storageService.removeAuthorization()
+    this.authStorageService.clearAuthorizationCredentials()
     this.loggedInSubject.next(false)
   }
 

@@ -8,13 +8,13 @@ import { onError } from 'apollo-link-error'
 import { setContext } from 'apollo-link-context'
 import { Globals } from './shared/globals'
 import { AuthService } from './auth/auth.service'
-import { StorageService } from './shared/services/storage.service'
+import { AuthStorageService } from './shared/services/auth-storage.service'
 import { Observable, Subscription, throwError, BehaviorSubject } from 'rxjs'
 import { map, tap, catchError, switchMap, filter, take } from 'rxjs/operators'
 
 @NgModule({
   exports: [ApolloModule, HttpLinkModule],
-  providers: [AuthService, StorageService],
+  providers: [AuthService, AuthStorageService],
 })
 export class GraphQLModule {
   private isRefreshing = false
@@ -25,7 +25,7 @@ export class GraphQLModule {
     private httpLink: HttpLink,
     private globals: Globals,
     private authService: AuthService,
-    private storageService: StorageService
+    private authStorageService: AuthStorageService
   ) {
     const setAuthorization = async (_, { clientAwareness, headers }) => {
       // console.log('setAuthorization')
@@ -33,7 +33,7 @@ export class GraphQLModule {
       // console.log(_.operationName)
       // console.log({ clientAwareness, headers })
 
-      const credentials = storageService.getAuthorization()
+      const credentials = authStorageService.getAuthorizationCredentials()
 
       if (credentials && (_.operationName !== 'ExchangeRefreshToken' && _.operationName !== 'CheckToken')) {
         //  console.log({ credentials })

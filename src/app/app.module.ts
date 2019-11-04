@@ -13,8 +13,7 @@ import { AppComponent } from './app.component'
 
 import { SharedModule } from './shared/modules/shared.module'
 
-import { LocalStorageService } from './local-storage.service'
-import { RouteReusableStrategy } from './route-reusable-strategy';
+import { RouteReusableStrategy } from './route-reusable-strategy'
 import { GraphQLModule } from './graphql.module'
 
 @NgModule({
@@ -29,7 +28,6 @@ import { GraphQLModule } from './graphql.module'
     GraphQLModule,
   ],
   providers: [
-    LocalStorageService,
     {
       provide: RouteReuseStrategy,
       useClass: RouteReusableStrategy,
