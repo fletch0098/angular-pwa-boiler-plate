@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
-import { Globals } from '../../shared/globals'
+import { Vars } from '../../shared/vars'
 import { Apollo } from 'apollo-angular'
 import { Observable, Subscription, throwError, BehaviorSubject } from 'rxjs'
 import { map, tap, catchError } from 'rxjs/operators'
@@ -8,7 +8,7 @@ import { APP, STATUS, USER } from './debug.gql'
 
 @Injectable()
 export class DebugService {
-  constructor(private apollo: Apollo, private globals: Globals) {}
+  constructor(private apollo: Apollo, private vars: Vars) {}
 
   app(): Observable<any> {
     return this.apollo

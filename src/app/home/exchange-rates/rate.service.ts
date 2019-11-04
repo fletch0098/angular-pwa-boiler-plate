@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 // import { of } from 'rxjs/observable/of';
-import { Globals } from '../../shared/globals'
+import { Vars } from '../../shared/vars'
 import { Apollo } from 'apollo-angular'
 import { Observable, Subscription, throwError } from 'rxjs'
 import { map, tap, catchError } from 'rxjs/operators'
@@ -10,7 +10,7 @@ import { Rate } from './rate.model'
 
 @Injectable()
 export class RateService {
-  constructor(private apollo: Apollo, private globals: Globals) {}
+  constructor(private apollo: Apollo, private vars: Vars) {}
 
   /**
    * Get rates by currency

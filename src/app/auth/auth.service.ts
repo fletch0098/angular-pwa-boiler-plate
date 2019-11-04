@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 // import { of } from 'rxjs/observable/of';
-import { Globals } from '../shared/globals'
+import { Vars } from '../shared/vars'
 import { Apollo } from 'apollo-angular'
 import { Observable, Subscription, throwError, BehaviorSubject } from 'rxjs'
 import { map, tap, catchError } from 'rxjs/operators'
@@ -16,7 +16,7 @@ import { AuthStorageService } from '../shared/services/auth-storage.service'
 
 @Injectable()
 export class AuthService {
-  constructor(private apollo: Apollo, private globals: Globals, private authStorageService: AuthStorageService) {
+  constructor(private apollo: Apollo, private vars: Vars, private authStorageService: AuthStorageService) {
     this.loggedInSubject = new BehaviorSubject<Boolean>(this.authStorageService.getAuthorizationCredentials() ? true : false)
     this.loggedIn = this.loggedInSubject.asObservable()
   }

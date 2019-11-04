@@ -5,13 +5,12 @@ import { environment } from '../../environments/environment'
  * Global variables and constants
  */
 @Injectable()
-export class Globals {
+export class Vars {
   production: boolean = environment.production
-  debug: boolean = false
+  debug: boolean = environment.debug
 
-  /**
-   * URL for graphQL test api
-   * @constant
-   */
-  testGraphQL: string = `http://localhost:1337/v1/graphql/`
+  apiUrl: string = `${environment.apiUrl}${environment.apiVersion}/`
+  graphQlUrl: string = `${this.apiUrl}graphql/`
+
+  authStorageKey: `app_auth`
 }

@@ -6,7 +6,7 @@ import apolloLogger from 'apollo-link-logger'
 import { concat, ApolloLink } from 'apollo-link'
 import { onError } from 'apollo-link-error'
 import { setContext } from 'apollo-link-context'
-import { Globals } from './shared/globals'
+import { Vars } from './shared/vars'
 import { AuthService } from './auth/auth.service'
 import { AuthStorageService } from './shared/services/auth-storage.service'
 import { Observable, Subscription, throwError, BehaviorSubject } from 'rxjs'
@@ -23,7 +23,7 @@ export class GraphQLModule {
   constructor(
     private apollo: Apollo,
     private httpLink: HttpLink,
-    private globals: Globals,
+    private vars: Vars,
     private authService: AuthService,
     private authStorageService: AuthStorageService
   ) {
@@ -109,7 +109,7 @@ export class GraphQLModule {
 
     // Apollo http
     const http = httpLink.create({
-      uri: globals.testGraphQL,
+      uri: vars.graphQlUrl,
     })
 
     // Error handler

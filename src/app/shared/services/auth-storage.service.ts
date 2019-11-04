@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { Globals } from '../globals'
+import { Vars } from '../vars'
 import { LoginResponse } from '../models/loginResponse.interface'
 import { LocalStorageService } from './local-storage.service'
 
@@ -8,7 +8,7 @@ import { LocalStorageService } from './local-storage.service'
  */
 @Injectable()
 export class AuthStorageService {
-  constructor(private globals: Globals, private localStorgaeService: LocalStorageService) {}
+  constructor(private vars: Vars, private localStorgaeService: LocalStorageService) {}
 
   /**
    * Store authorization credentials in local storage
