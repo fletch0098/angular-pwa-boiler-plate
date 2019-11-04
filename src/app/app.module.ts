@@ -16,8 +16,10 @@ import { CommonModule } from '@angular/common'
 
 import { CoreModule } from './core/core.module'
 
+import { NotFoundComponent } from './app-not-found/not-found.component'
+
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, NotFoundComponent],
   imports: [
     CommonModule,
     BrowserModule,
