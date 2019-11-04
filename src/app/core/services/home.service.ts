@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
-import { Vars } from '../core/vars'
+import { Vars } from '../vars'
 import { Apollo } from 'apollo-angular'
 import { Observable, Subscription, throwError, BehaviorSubject } from 'rxjs'
 import { map, tap, catchError } from 'rxjs/operators'
-import { APP, STATUS } from './home.gql'
+import { APP, STATUS } from './gql/home.gql'
 
 @Injectable()
 export class HomeService {

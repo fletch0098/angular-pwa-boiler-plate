@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { HomeService } from '../home.service'
+import { HomeService } from '../../core/services/home.service'
 
 import { AppLoaderService } from '../../shared/components/app-loader/app-loader.service'
 

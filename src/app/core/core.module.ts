@@ -13,6 +13,8 @@ import { RouteReuseStrategy, RouterModule } from '@angular/router'
 // } from '@app/core/http';
 import { AuthStorageService } from './services/auth-storage.service'
 import { LocalStorageService } from './services/local-storage.service'
+import { AuthService } from './services/auth.service'
+import { HomeService } from './services/home.service'
 import { RouteReusableStrategy } from './route-reusable-strategy'
 import { Vars } from './vars'
 // import {
@@ -30,6 +32,8 @@ import { GraphQLModule } from './graphql.module'
     AuthStorageService,
     LocalStorageService,
     Vars,
+    AuthService,
+    HomeService,
     // AuthenticationService,
     // AuthenticationGuard,
     // ApiPrefixInterceptor,
