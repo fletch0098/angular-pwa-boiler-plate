@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common'
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http'
-import { NgModule } from '@angular/core'
+import { NgModule, Optional, SkipSelf } from '@angular/core'
 import { RouteReuseStrategy, RouterModule } from '@angular/router'
 // import {
 //   AuthenticationGuard,
@@ -25,8 +25,11 @@ import { Vars } from './vars'
 
 import { GraphQLModule } from './graphql.module'
 
+import { FlexLayoutModule } from '@angular/flex-layout'
+import { throwIfAlreadyLoaded } from './module-import-guard'
+
 @NgModule({
-  imports: [CommonModule, HttpClientModule, RouterModule, GraphQLModule],
+  imports: [CommonModule, HttpClientModule, RouterModule, GraphQLModule, FlexLayoutModule],
   declarations: [],
   providers: [
     AuthStorageService,
@@ -56,4 +59,8 @@ import { GraphQLModule } from './graphql.module'
     },
   ],
 })
-export class CoreModule {}
+export class CoreModule {
+  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
+    throwIfAlreadyLoaded(parentModule, 'CoreModule')
+  }
+}

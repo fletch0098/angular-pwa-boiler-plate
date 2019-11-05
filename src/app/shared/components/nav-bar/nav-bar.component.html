@@ -1,0 +1,9 @@
+<mat-toolbar class="toolbar" [class.app-is-mobile]="mobileQuery.matches" color="primary">
+  <header>
+    <button mat-icon-button aria-label="Menu" (click)="lnav.toggle()" *ngIf="mobileQuery.matches">
+      <mat-icon>menu</mat-icon>
+    </button>
+    {{ title }}
+    <div class="fill-space"></div>
+  </header>
+</mat-toolbar>

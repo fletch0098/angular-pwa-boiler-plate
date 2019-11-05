@@ -9,6 +9,7 @@ import { LOGIN, EXCHANGE_REFRESH_TOKEN, CHECK_TOKEN } from './gql/auth.gql'
 import { Login } from '../../auth/login/login.interface'
 import { User } from '../../shared/models/user.model'
 import { LoginResponse } from '../../shared/models/loginResponse.interface'
+import { ApiError } from '../../shared/models/api-error.interface'
 
 import { AuthStorageService } from './auth-storage.service'
 
@@ -120,11 +121,14 @@ export class AuthService {
     let errorMessage = ''
     if (error.error instanceof ErrorEvent) {
       // client-side error
+      console.log('client side error', error)
       errorMessage = `Error: ${error.error.message}`
     } else {
       // server-side error
+      console.log('server side error', error)
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`
     }
+    return throwError(error)
     //window.alert(errorMessage)
     return error
   }

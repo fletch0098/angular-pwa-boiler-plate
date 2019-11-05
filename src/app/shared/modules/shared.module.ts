@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router'
 import { BlankComponent } from '../components/blank/blank.component'
 import { FullLayoutComponent } from '../components/full/full.component'
 import { MenuLayoutComponent } from '../components/menu/menu.component'
+import { NavBarComponent } from '../components/nav-bar/nav-bar.component'
 
 import { MaterialModule } from './material.module'
 
@@ -26,6 +27,7 @@ import { AppNotificationComponent } from '../components/app-notification/app-not
   imports: [CommonModule, FormsModule, RouterModule, ReactiveFormsModule, MaterialModule],
   declarations: [
     BlankComponent,
+    NavBarComponent,
     FullLayoutComponent,
     MenuLayoutComponent,
     CountryCodeSelectComponent,
@@ -35,6 +37,7 @@ import { AppNotificationComponent } from '../components/app-notification/app-not
   ],
   exports: [
     BlankComponent,
+    NavBarComponent,
     FullLayoutComponent,
     MenuLayoutComponent,
     MaterialModule,
