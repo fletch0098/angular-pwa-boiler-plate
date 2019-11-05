@@ -9,15 +9,20 @@
     </header>
 
     <span class="menu-spacer"></span>
+
     <button mat-icon-button [matMenuTriggerFor]="auth">
       <mat-icon>account_box</mat-icon>
     </button>
     <mat-menu #auth="matMenu">
-      <button mat-menu-item (click)="logout()">
+      <a *ngIf="!isAuthenticated" mat-menu-item routerLink="/auth/login">
         <mat-icon>person</mat-icon>
-        <span>Sign in</span>
-      </button>
-      <button mat-menu-item (click)="logout()">
+        <span>Sign in</span></a
+      >
+      <a *ngIf="isAuthenticated" mat-menu-item routerLink="/dashboard/profile">
+        <mat-icon>person</mat-icon>
+        <span>Profile</span></a
+      >
+      <button *ngIf="isAuthenticated" mat-menu-item (click)="logout()">
         <mat-icon>exit_to_app</mat-icon>
         <span>Sign out</span>
       </button>
@@ -30,7 +35,7 @@
       <nav>
         <mat-list>
           <mat-list-item *ngFor="let route of nav">
-            <a mat-button routerLink="{{ route.path }}" routerLinkActive="active" (click)="toggleMobileNav(lnav)">
+            <a mat-button routerLink="{{ route.path }}" routerLinkActive="active">
               <mat-icon class="menu-icon">{{ route.icon }}</mat-icon
               >{{ route.title }}</a
             >
@@ -43,6 +48,7 @@
     <mat-sidenav-content>
       <div class="content">
         <main>
+          <app-loader></app-loader>
           <router-outlet></router-outlet>
         </main>
       </div>

@@ -18,14 +18,14 @@ import { AuthStorageService } from './auth-storage.service'
 @Injectable()
 export class AuthService {
   constructor(private apollo: Apollo, private vars: Vars, private authStorageService: AuthStorageService) {
-    this.loggedInSubject = new BehaviorSubject<Boolean>(this.authStorageService.getAuthorizationCredentials() ? true : false)
+    this.loggedInSubject = new BehaviorSubject<boolean>(this.authStorageService.getAuthorizationCredentials() ? true : false)
     this.loggedIn = this.loggedInSubject.asObservable()
   }
 
-  private loggedInSubject: BehaviorSubject<Boolean>
-  public loggedIn: Observable<Boolean>
+  private loggedInSubject: BehaviorSubject<boolean>
+  public loggedIn: Observable<boolean>
 
-  public get loggedInValue(): Boolean {
+  public get loggedInValue(): boolean {
     return this.loggedInSubject.value
   }
 

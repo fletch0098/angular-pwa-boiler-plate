@@ -37,6 +37,16 @@ export const AppRoutes: Routes = [
     ],
   },
   {
+    path: '',
+    component: MenuLayoutComponent,
+    children: [
+      {
+        path: 'dashboard',
+        loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
+      },
+    ],
+  },
+  {
     path: '**',
     redirectTo: '/404',
   },

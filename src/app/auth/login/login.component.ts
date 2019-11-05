@@ -52,6 +52,7 @@ export class LogInComponent {
       result => {
         console.log('logged in', result)
         this.notificationService.success(undefined, 'Logged in successfully')
+        this._router.navigate(['dashboard', 'profile'])
       },
       err => {
         console.log(err)
