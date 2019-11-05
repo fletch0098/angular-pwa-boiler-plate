@@ -3,6 +3,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
 import { AuthService } from '../../core/services/auth.service'
 
+import { NotificationService } from '../../shared/services/notification.service'
+
 @Component({
   selector: 'login',
   templateUrl: './login.component.html',
@@ -23,7 +25,7 @@ export class LogInComponent {
     return this.signinForm.get('password')
   }
 
-  constructor(private _router: Router, private authService: AuthService) {}
+  constructor(private _router: Router, private authService: AuthService, private notificationService: NotificationService) {}
 
   getEmailInputError() {
     if (this.emailInput.hasError('email')) {
@@ -49,9 +51,12 @@ export class LogInComponent {
     this.authService.login(credentials).subscribe(
       result => {
         console.log('logged in', result)
+        this.notificationService.success(undefined, 'Logged in successfully')
       },
       err => {
         console.log(err)
+        this.notificationService.error(undefined, err.details[0])
+        // this.notificationService.show('ok')
       }
     )
   }

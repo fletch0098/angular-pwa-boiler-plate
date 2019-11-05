@@ -19,11 +19,31 @@ import { FilterPipe } from '../components/country-code-select/filter.pipe'
 import { AppLoaderService } from '../components/app-loader/app-loader.service'
 import { AppLoaderComponent } from '../components/app-loader/app-loader.component'
 
+import { NotificationService } from '../services/notification.service'
+import { AppNotificationComponent } from '../components/app-notification/app-notification.component'
+
 @NgModule({
   imports: [CommonModule, FormsModule, RouterModule, ReactiveFormsModule, MaterialModule],
-  declarations: [BlankComponent, FullLayoutComponent, MenuLayoutComponent, CountryCodeSelectComponent, FilterPipe, AppLoaderComponent],
-  exports: [BlankComponent, FullLayoutComponent, MenuLayoutComponent, MaterialModule, FormsModule, ReactiveFormsModule, AppLoaderComponent],
-  entryComponents: [CountryCodeSelectComponent, AppLoaderComponent],
-  providers: [AppLoaderService],
+  declarations: [
+    BlankComponent,
+    FullLayoutComponent,
+    MenuLayoutComponent,
+    CountryCodeSelectComponent,
+    FilterPipe,
+    AppLoaderComponent,
+    AppNotificationComponent,
+  ],
+  exports: [
+    BlankComponent,
+    FullLayoutComponent,
+    MenuLayoutComponent,
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AppLoaderComponent,
+    AppNotificationComponent,
+  ],
+  entryComponents: [CountryCodeSelectComponent, AppLoaderComponent, AppNotificationComponent],
+  providers: [AppLoaderService, NotificationService],
 })
 export class SharedModule {}
