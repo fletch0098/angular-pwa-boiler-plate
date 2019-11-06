@@ -2,6 +2,7 @@ import { Component } from '@angular/core'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
 import { AuthService } from '../../core/services/auth.service'
+import { LoggingService, LogType } from '../../core/services/logging.service'
 
 import { NotificationService } from '../../shared/services/notification.service'
 
@@ -11,12 +12,14 @@ import { NotificationService } from '../../shared/services/notification.service'
   styleUrls: ['./login.component.scss'],
 })
 export class LogInComponent {
+  name: string = 'LogInComponent'
+
   signinForm: FormGroup = new FormGroup({
     email: new FormControl(''),
     password: new FormControl(''),
   })
 
-  hide = true
+  hide: boolean = true
 
   get emailInput() {
     return this.signinForm.get('email')
@@ -25,9 +28,14 @@ export class LogInComponent {
     return this.signinForm.get('password')
   }
 
-  constructor(private _router: Router, private authService: AuthService, private notificationService: NotificationService) {}
+  constructor(
+    private _router: Router,
+    private authService: AuthService,
+    private notificationService: NotificationService,
+    private loggingService: LoggingService
+  ) {}
 
-  getEmailInputError() {
+  getEmailInputError(): string {
     if (this.emailInput.hasError('email')) {
       return 'Please enter a valid email address.'
     }
@@ -36,13 +44,14 @@ export class LogInComponent {
     }
   }
 
-  getPasswordInputError() {
+  getPasswordInputError(): string {
     if (this.passwordInput.hasError('required')) {
       return 'A password is required.'
     }
   }
 
-  signIn() {
+  signIn(): void {
+    let operation: string = 'signIn'
     let credentials = {
       username: this.emailInput.value,
       password: this.passwordInput.value,
@@ -50,7 +59,7 @@ export class LogInComponent {
 
     this.authService.login(credentials).subscribe(
       result => {
-        console.log('logged in', result)
+        this.loggingService.info('User logged in successfully', this.name, operation, result)
         this.notificationService.warn('Logged in successfully')
         this._router.navigate(['dashboard', 'profile'])
       },

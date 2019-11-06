@@ -22,6 +22,8 @@ import { AppLoaderComponent } from '../components/app-loader/app-loader.componen
 import { NotificationService } from '../services/notification.service'
 import { AppNotificationComponent } from '../components/app-notification/app-notification.component'
 
+import { UtilityService } from '../services/utility.service'
+
 @NgModule({
   imports: [CommonModule, FormsModule, RouterModule, ReactiveFormsModule, MaterialModule],
   declarations: [
@@ -46,6 +48,6 @@ import { AppNotificationComponent } from '../components/app-notification/app-not
     AppNotificationComponent,
   ],
   entryComponents: [CountryCodeSelectComponent, AppLoaderComponent, AppNotificationComponent],
-  providers: [AppLoaderService, NotificationService],
+  providers: [AppLoaderService, NotificationService, UtilityService],
 })
 export class SharedModule {}

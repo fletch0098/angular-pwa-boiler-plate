@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core'
 import { HomeService } from '../../core/services/home.service'
 
 import { AppLoaderService } from '../../shared/components/app-loader/app-loader.service'
+import { UtilityService } from '../../shared/services/utility.service'
 
 @Component({
   templateUrl: './home.component.html',
@@ -10,7 +11,7 @@ import { AppLoaderService } from '../../shared/components/app-loader/app-loader.
 export class HomeComponent implements OnInit {
   apiStatus: string = 'Not Connected'
 
-  constructor(private homeService: HomeService, private appLoaderService: AppLoaderService) {}
+  constructor(private homeService: HomeService, private appLoaderService: AppLoaderService, private utilityService: UtilityService) {}
 
   ngOnInit() {
     this.appLoaderService.show()
@@ -42,5 +43,9 @@ export class HomeComponent implements OnInit {
       console.log('hide')
       this.appLoaderService.hide()
     }, 3000)
+  }
+
+  onNotImplemented(): void {
+    this.utilityService.notImplemented('home', 'test')
   }
 }
