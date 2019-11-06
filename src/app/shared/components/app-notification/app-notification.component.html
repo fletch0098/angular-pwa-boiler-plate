@@ -1,6 +1,4 @@
 <div>
-  <b
-    ><span [ngClass]="data.color">{{ data.title }}</span></b
-  >
-  <span>{{ data.message }}</span>
+  <span [ngClass]="data.color">{{ data.message }}</span>
+  <button mat-raised-button color="primary" (click)="onStart()">Start</button>
 </div>

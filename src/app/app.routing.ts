@@ -4,7 +4,7 @@ import { BlankComponent } from './shared/components/blank/blank.component'
 import { MenuLayoutComponent } from './shared/components/menu/menu.component'
 import { FullLayoutComponent } from './shared/components/full/full.component'
 
-import { NotFoundComponent } from './app-not-found/not-found.component'
+import { NotFoundComponent } from './404/not-found.component'
 
 export const AppRoutes: Routes = [
   {

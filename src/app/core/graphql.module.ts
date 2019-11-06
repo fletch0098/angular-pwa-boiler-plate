@@ -8,44 +8,44 @@ import { onError } from 'apollo-link-error'
 import { setContext } from 'apollo-link-context'
 import { Vars } from './vars'
 import { AuthService } from './services/auth.service'
+import { LoggingService } from './services/logging.service'
 import { AuthStorageService } from './services/auth-storage.service'
 import { Observable, Subscription, throwError, BehaviorSubject } from 'rxjs'
 import { map, tap, catchError, switchMap, filter, take } from 'rxjs/operators'
 
+import { ApiError } from '../shared/models/api-error.interface'
+
 @NgModule({
   exports: [ApolloModule, HttpLinkModule],
-  providers: [AuthService, AuthStorageService],
+  providers: [],
 })
 export class GraphQLModule {
   private isRefreshing = false
   private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null)
+
+  name: string = 'GraphQLModule'
 
   constructor(
     private apollo: Apollo,
     private httpLink: HttpLink,
     private vars: Vars,
     private authService: AuthService,
-    private authStorageService: AuthStorageService
+    private authStorageService: AuthStorageService,
+    private loggingSerivce: LoggingService
   ) {
     const setAuthorization = async (_, { clientAwareness, headers }) => {
-      // console.log('setAuthorization')
+      let operation: string = 'constructor.setAuthorization'
+      // this.loggingSerivce.trace(this.name, operation)
 
-      // console.log(_.operationName)
-      // console.log({ clientAwareness, headers })
-
-      const credentials = authStorageService.getAuthorizationCredentials()
+      const credentials = this.authStorageService.getAuthorizationCredentials()
 
       if (credentials && (_.operationName !== 'ExchangeRefreshToken' && _.operationName !== 'CheckToken')) {
-        //  console.log({ credentials })
-
         if (credentials) {
-          //  console.log('auth header')
           let jwtBearer: any = credentials.jwtBearer
           let isBearerValid = await this.authService.checkToken(jwtBearer).toPromise()
 
           if (!isBearerValid) {
             if (!this.isRefreshing) {
-              console.log('not refreshing')
               this.isRefreshing = true
               this.refreshTokenSubject.next(null)
 
@@ -53,33 +53,23 @@ export class GraphQLModule {
                 .exchangeRefreshToken(credentials.jwtRefresh)
                 .pipe(
                   switchMap((token: any) => {
-                    console.log({ token })
                     this.isRefreshing = false
                     this.refreshTokenSubject.next(token.jwtBearer)
                     return token.jwtBearer
                   })
                 )
                 .toPromise()
-              // .then(res => res['jwtBearer'])
             } else {
-              console.log('refreshing')
               jwtBearer = await this.refreshTokenSubject
                 .pipe(
                   filter(token => token != null),
                   take(1),
                   switchMap(jwt => {
-                    console.log({ jwt })
                     return jwt
                   })
                 )
                 .toPromise()
-              // .then(res => res['jwtBearer'])
             }
-
-            // jwtBearer = await this.authService
-            //   .exchangeRefreshToken(credentials.jwtRefresh)
-            //   .toPromise()
-            //   .then(res => res.jwtBearer)
             return {
               headers: {
                 ...headers,
@@ -88,7 +78,6 @@ export class GraphQLModule {
             }
           }
 
-          // console.log({ jwtBearer, subjet: this.refreshTokenSubject.value })
           return {
             headers: {
               ...headers,
@@ -97,10 +86,51 @@ export class GraphQLModule {
           }
         }
       } else {
-        //  console.log('header')
         return {
           headers,
         }
+      }
+    }
+
+    const errorHandler = (args): void => {
+      let operationName: string = 'errorHandler'
+      // this.loggingSerivce.trace(this.name, operationName)
+
+      // this.loggingSerivce.debug('errorHandler args', this.name, operationName, args)
+
+      let graphQLErrors: ApiError[] = args.graphQLErrors
+      let networkError: Error = args.networkError
+
+      if (graphQLErrors) {
+        for (let err of graphQLErrors) {
+          this.loggingSerivce.error(`${err.internalCode}: ${err.message}`, this.name, operationName, err)
+          switch (err.internalCode) {
+            case 4000:
+              // this.loggingSerivce.info(err.internalCode.toString(), this.name, operationName)
+              break
+            case 4001:
+              // this.loggingSerivce.info(err.internalCode.toString(), this.name, operationName)
+              break
+            case 4003:
+              // this.loggingSerivce.info(err.internalCode.toString(), this.name, operationName)
+              break
+            case 4004:
+              // this.loggingSerivce.info(err.internalCode.toString(), this.name, operationName)
+              break
+            case 5000:
+              // this.loggingSerivce.info(err.internalCode.toString(), this.name, operationName)
+              break
+            case 5001:
+              // this.loggingSerivce.info(err.internalCode.toString(), this.name, operationName)
+              break
+            default:
+              this.loggingSerivce.warn('Unknown error code', this.name, operationName)
+              break
+          }
+        }
+      }
+      if (networkError) {
+        this.loggingSerivce.error('networkError', this.name, operationName, networkError)
       }
     }
 
@@ -113,7 +143,7 @@ export class GraphQLModule {
     })
 
     // Error handler
-    const error = onError(this.errorHandler)
+    const error = onError(errorHandler)
 
     // Basic headers
     const basic = setContext((operation, context) => ({
@@ -137,27 +167,5 @@ export class GraphQLModule {
       link,
       cache,
     })
-
-    console.log('Apollo Created')
-  }
-
-  errorHandler({ graphQLErrors, networkError, operation, forward }): void {
-    console.log('errorHandler')
-    if (graphQLErrors) {
-      for (let err of graphQLErrors) {
-        console.log(err)
-        switch (err['internalCode']) {
-          case 4001:
-            console.log('4001')
-            break
-          default:
-            console.log('unknown')
-            break
-        }
-      }
-    }
-    if (networkError) {
-      console.log({ networkError })
-    }
   }
 }

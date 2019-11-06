@@ -5,4 +5,11 @@ export interface ApiError {
   details: string[]
   internalError: string
   isPublic: boolean
+  path?: string[]
+  location?: Location[]
+}
+
+interface Location {
+  line: number
+  column: number
 }

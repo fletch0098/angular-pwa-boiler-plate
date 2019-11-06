@@ -55,8 +55,8 @@ export class AuthService {
           // console.log(decoded)
 
           return result
-        }),
-        catchError(this.handleError)
+        })
+        // catchError(this.handleError)
       )
   }
 
@@ -130,6 +130,6 @@ export class AuthService {
     }
     return throwError(error)
     //window.alert(errorMessage)
-    return error
+    // return error
   }
 }

@@ -51,13 +51,16 @@ export class LogInComponent {
     this.authService.login(credentials).subscribe(
       result => {
         console.log('logged in', result)
-        this.notificationService.success(undefined, 'Logged in successfully')
+        this.notificationService.warn('Logged in successfully')
         this._router.navigate(['dashboard', 'profile'])
       },
       err => {
-        console.log(err)
-        this.notificationService.error(undefined, err.details[0])
-        // this.notificationService.show('ok')
+        let errorMessage: string = ''
+        err.graphQLErrors.map(x => {
+          errorMessage = errorMessage + '\n' + x.details.join('\n')
+        })
+
+        this.notificationService.basic(errorMessage)
       }
     )
   }

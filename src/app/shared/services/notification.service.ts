@@ -47,34 +47,51 @@ export class NotificationService implements OnDestroy {
    * @returns {MatSnackBarRef}
    */
   basic(message: string, buttonLabel: string = 'OK'): MatSnackBarRef<any> {
-    const toastTimeout = 8000
-    if (toastTimeout > 0) {
-      return this.toast.open(message, buttonLabel, {
-        duration: toastTimeout,
-      })
-    } else {
-      return this.toast.open(message, buttonLabel, {})
-    }
-  }
-
-  error(title: string = 'App Error!', message: string = 'Something went wrong...', buttonLabel: string = 'OK'): MatSnackBarRef<any> {
-    return this.toast.openFromComponent(AppNotificationComponent, {
+    return this.toast.open(message, buttonLabel, {
       duration: this.toastTimeout,
-      data: { title, message, buttonLabel, color: 'warn' },
+      panelClass: ['warn'],
     })
   }
 
-  success(title: string = 'Success!', message: string = 'Operation successul', buttonLabel: string = 'OK'): MatSnackBarRef<any> {
-    return this.toast.openFromComponent(AppNotificationComponent, {
+  error(message: string, buttonLabel: string = 'dismiss'): MatSnackBarRef<any> {
+    return this.toast.open(message, buttonLabel, {
       duration: this.toastTimeout,
-      data: { title, message, buttonLabel, color: 'primary' },
+      panelClass: ['style-error'],
     })
   }
 
-  warn(title: string = 'Success!', message: string = 'Operation successul', buttonLabel: string = 'OK'): MatSnackBarRef<any> {
-    return this.toast.openFromComponent(AppNotificationComponent, {
+  warn(message: string, buttonLabel: string = 'OK'): MatSnackBarRef<any> {
+    return this.toast.open(message, buttonLabel, {
       duration: this.toastTimeout,
-      data: { title, message, buttonLabel, color: 'accent' },
+      panelClass: ['accent'],
     })
   }
+
+  success(message: string, buttonLabel: string = 'OK'): MatSnackBarRef<any> {
+    return this.toast.open(message, buttonLabel, {
+      duration: this.toastTimeout,
+      panelClass: ['style-success'],
+    })
+  }
+
+  // error(title: string = 'App Error!', message: string = 'Something went wrong...', buttonLabel: string = 'OK'): MatSnackBarRef<any> {
+  //   return this.toast.openFromComponent(AppNotificationComponent, {
+  //     duration: this.toastTimeout,
+  //     data: { title, message, buttonLabel, color: 'warn' },
+  //   })
+  // }
+
+  // success(title: string = 'Success!', message: string = 'Operation successul', buttonLabel: string = 'OK'): MatSnackBarRef<any> {
+  //   return this.toast.openFromComponent(AppNotificationComponent, {
+  //     duration: this.toastTimeout,
+  //     data: { title, message, buttonLabel, color: 'primary' },
+  //   })
+  // }
+
+  // warn(title: string = 'Success!', message: string = 'Operation successul', buttonLabel: string = 'OK'): MatSnackBarRef<any> {
+  //   return this.toast.openFromComponent(AppNotificationComponent, {
+  //     duration: this.toastTimeout,
+  //     data: { title, message, buttonLabel, color: 'accent' },
+  //   })
+  // }
 }
