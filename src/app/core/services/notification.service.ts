@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core'
 import { MatSnackBar, MatSnackBarRef } from '@angular/material'
 import { Subscription } from 'rxjs'
 
-import { AppNotificationComponent } from '../components/app-notification/app-notification.component'
+import { AppNotificationComponent } from '../../shared/components/app-notification/app-notification.component'
 
 /**
  * Provides an abstract wrapper around showing a MatSnackbar

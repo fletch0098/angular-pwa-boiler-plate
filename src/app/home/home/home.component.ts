@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { HomeService } from '../../core/services/home.service'
 
-import { AppLoaderService } from '../../shared/components/app-loader/app-loader.service'
-import { UtilityService } from '../../shared/services/utility.service'
+import { AppLoaderService } from '../../core/components/app-loader/app-loader.service'
+import { UtilityService } from '../../core/services/utility.service'
 
 @Component({
   templateUrl: './home.component.html',

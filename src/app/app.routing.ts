@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router'
 
-import { BlankComponent } from './shared/components/blank/blank.component'
-import { MenuLayoutComponent } from './shared/components/menu/menu.component'
-import { FullLayoutComponent } from './shared/components/full/full.component'
+import { BlankComponent } from './core/components/blank/blank.component'
+import { MenuLayoutComponent } from './core/components/menu/menu.component'
+import { FullLayoutComponent } from './core/components/full/full.component'
 
 import { NotFoundComponent } from './404/not-found.component'
 

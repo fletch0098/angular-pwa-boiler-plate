@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
-import { Vars } from '../../core/vars'
-import { LoggingService } from '../../core/services/logging.service'
+import { Vars } from '../vars'
+import { LoggingService } from './logging.service'
 import { NotificationService } from './notification.service'
 
 import * as moment from 'moment'

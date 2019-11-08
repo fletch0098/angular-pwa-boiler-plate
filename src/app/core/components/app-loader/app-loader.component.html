@@ -1,0 +1,13 @@
+<div class="wrapper">
+  <div class="overlay" *ngIf="isLoading">
+    <div class="Aligner-item Aligner-item--top">…</div>
+    <div class="spinner-wrapper">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="Aligner-item Aligner-item--bottom">…</div>
+  </div>
+
+  <!-- <div class="loaded-content" [class.blurred]="showSpinner">
+    <ng-content></ng-content>
+  </div> -->
+</div>
