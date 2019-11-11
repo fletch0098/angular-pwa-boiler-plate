@@ -63,7 +63,7 @@ export class NotificationService implements OnDestroy {
   warn(message: string, buttonLabel: string = 'OK'): MatSnackBarRef<any> {
     return this.toast.open(message, buttonLabel, {
       duration: this.toastTimeout,
-      panelClass: ['accent'],
+      panelClass: ['style-warn'],
     })
   }
 
@@ -71,6 +71,13 @@ export class NotificationService implements OnDestroy {
     return this.toast.open(message, buttonLabel, {
       duration: this.toastTimeout,
       panelClass: ['style-success'],
+    })
+  }
+
+  info(message: string, buttonLabel: string = 'OK'): MatSnackBarRef<any> {
+    return this.toast.open(message, buttonLabel, {
+      duration: this.toastTimeout,
+      panelClass: ['style-info'],
     })
   }
 
