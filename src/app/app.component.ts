@@ -9,6 +9,4 @@ import { Vars } from './core/vars'
 })
 export class AppComponent {
   constructor(private vars: Vars) {}
-
-  title = this.vars.appTitle
 }
