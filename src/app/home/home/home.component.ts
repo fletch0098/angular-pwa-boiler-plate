@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   constructor(private homeService: HomeService, private appLoaderService: AppLoaderService, private utilityService: UtilityService) {}
 
   ngOnInit() {
-    this.appLoaderService.show()
+    this.appLoaderService.startRequest()
     this.status()
   }
 
@@ -22,26 +22,21 @@ export class HomeComponent implements OnInit {
     this.homeService.status().subscribe(
       result => {
         this.apiStatus = result
-        this.appLoaderService.hide()
+        this.appLoaderService.endRequest()
       },
       err => {
         console.error(err)
-        this.appLoaderService.hide()
+        this.appLoaderService.endRequest()
       }
     )
   }
 
-  onStop(): void {
-    console.log('onStop')
-    this.appLoaderService.hide()
-  }
-
   onStart(): void {
     console.log('onStart')
-    this.appLoaderService.show()
+    this.appLoaderService.startRequest()
     setTimeout(() => {
       console.log('hide')
-      this.appLoaderService.hide()
+      this.appLoaderService.endRequest()
     }, 3000)
   }
 
