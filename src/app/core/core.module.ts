@@ -13,9 +13,10 @@ import { FlexLayoutModule } from '@angular/flex-layout'
 import { throwIfAlreadyLoaded } from './module-import-guard'
 
 import { AppLoaderComponent } from './components/app-loader/app-loader.component'
-import { AppLoaderService } from './components/app-loader/app-loader.service'
+import { AppLoaderService } from './services/app-loader.service'
 
 import { ConfirmComponent } from './components/confirm/confirm.component'
+import { ConfirmActionService } from './services/confirmAction.service'
 
 import { BlankComponent } from './components/blank/blank.component'
 import { FullLayoutComponent } from './components/full/full.component'
@@ -43,8 +44,8 @@ import { UtilityService } from './services/utility.service'
     LoggingService,
     UtilityService,
     NotificationService,
+    ConfirmActionService,
     // AuthenticationGuard,
-    // UtilService,
     {
       provide: RouteReuseStrategy,
       useClass: RouteReusableStrategy,

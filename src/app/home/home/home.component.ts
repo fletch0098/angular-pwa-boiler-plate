@@ -1,14 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { HomeService } from '../../core/services/home.service'
 
-import { AppLoaderService } from '../../core/components/app-loader/app-loader.service'
+import { AppLoaderService } from '../../core/services/app-loader.service'
 import { UtilityService } from '../../core/services/utility.service'
 import { LoggingService } from '../../core/services/logging.service'
 import { NotificationService } from '../../core/services/notification.service'
-
-import { ConfirmComponent } from '../../core/components/confirm/confirm.component'
-
-import { MatBottomSheet } from '@angular/material'
+import { ConfirmActionService } from '../../core/services/confirmAction.service'
+import { Vars } from '../../core/vars'
 
 @Component({
   templateUrl: './home.component.html',
@@ -24,32 +22,46 @@ export class HomeComponent implements OnInit {
     private notificationService: NotificationService,
     private utilityService: UtilityService,
     private loggingService: LoggingService,
-    private bottomSheet: MatBottomSheet
+    private confirmActionService: ConfirmActionService,
+    private vars: Vars
   ) {}
 
-  ngOnInit() {
+  /**
+   * On Component Initialize, Show loader and check api status
+   */
+  ngOnInit(): void {
     this.appLoaderService.startRequest()
     this.status()
   }
 
+  /**
+   * Get Api status
+   */
   status(): void {
+    let operation: string = 'status'
     this.homeService.status().subscribe(
       result => {
+        this.loggingService.info('Api Connected Successfully', this.name, operation)
         this.apiStatus = result
         this.appLoaderService.endRequest()
       },
       err => {
-        console.error(err)
+        this.loggingService.warn('Api Not connected', this.name, operation, err)
         this.appLoaderService.endRequest()
       }
     )
   }
 
+  /**
+   * Start the app loader and set a timer to hide loader
+   */
   onStart(): void {
-    console.log('onStart')
+    let operation: string = 'onStart'
+    this.loggingService.trace(this.name, operation)
     this.appLoaderService.startRequest()
+    this.appLoaderService.startRequest()
+
     setTimeout(() => {
-      console.log('hide')
       this.appLoaderService.endRequest()
     }, 3000)
   }
@@ -58,7 +70,14 @@ export class HomeComponent implements OnInit {
     let operation: string = 'successNotification'
 
     this.loggingService.trace(this.name, operation)
-    this.notificationService.success('Success', 'successBtn')
+    this.notificationService
+      .success('Success', 'successBtn')
+      .afterDismissed()
+      .subscribe(dismissed => {
+        if (dismissed && dismissed.dismissedByAction === true) {
+          this.loggingService.info('Action pressed', this.name, operation, dismissed)
+        }
+      })
   }
 
   warnNotification(): void {
@@ -82,23 +101,20 @@ export class HomeComponent implements OnInit {
     this.notificationService.info('Info', 'infoBtn')
   }
 
+  /**
+   * Ask for confirmation and subscribe to response
+   */
   confirm(): void {
     let operation: string = 'confirm'
 
     this.loggingService.trace(this.name, operation)
-    let sheetRef = this.bottomSheet.open(ConfirmComponent, {
-      data: 'Test',
-    })
-
-    sheetRef.afterDismissed().subscribe(data => {
-      console.log(data)
-      // handle your code working according to different actions.
-      if (data && data.message == 'Cancel') {
-        alert('Cancel was clicked in bottomsheet')
-      }
-      if (data && data.message == 'Confirmed') {
-        alert('Change Status was clicked in bottomsheet')
-      }
-    })
+    this.confirmActionService
+      .confirmAction()
+      .afterDismissed()
+      .subscribe(response => {
+        if (response && response.message == 'Confirmed') {
+          this.loggingService.info('Action Confirmed', this.name, operation)
+        }
+      })
   }
 }

@@ -14,4 +14,7 @@ export class Vars {
 
   authStorageKey: `app_auth`
   appTitle: string = environment.appTitle
+
+  requestTimeout: number = 300000
+  requestTimeoutMessage: string = 'You request has timed out'
 }
