@@ -9,6 +9,7 @@ import { setContext } from 'apollo-link-context'
 import { Vars } from './vars'
 import { AuthService } from './services/auth.service'
 import { LoggingService } from './services/logging.service'
+import { NotificationService } from './services/notification.service'
 import { AuthStorageService } from './services/auth-storage.service'
 import { Observable, Subscription, throwError, BehaviorSubject } from 'rxjs'
 import { map, tap, catchError, switchMap, filter, take } from 'rxjs/operators'
@@ -31,7 +32,8 @@ export class GraphQLModule {
     private vars: Vars,
     private authService: AuthService,
     private authStorageService: AuthStorageService,
-    private loggingSerivce: LoggingService
+    private loggingSerivce: LoggingService,
+    private notificationService: NotificationService
   ) {
     const setAuthorization = async (_, { clientAwareness, headers }) => {
       let operation: string = 'constructor.setAuthorization'
@@ -39,7 +41,7 @@ export class GraphQLModule {
 
       const credentials = this.authStorageService.getAuthorizationCredentials()
 
-      if (credentials && (_.operationName !== 'ExchangeRefreshToken' && _.operationName !== 'CheckToken')) {
+      if (credentials && _.operationName !== 'ExchangeRefreshToken' && _.operationName !== 'CheckToken') {
         if (credentials) {
           let jwtBearer: any = credentials.jwtBearer
           let isBearerValid = await this.authService.checkToken(jwtBearer).toPromise()
@@ -104,6 +106,12 @@ export class GraphQLModule {
       if (graphQLErrors) {
         for (let err of graphQLErrors) {
           this.loggingSerivce.error(`${err.internalCode}: ${err.message}`, this.name, operationName, err)
+          let errorMessage: string = ''
+
+          errorMessage = errorMessage + '\n' + err.details.join('\n')
+
+          this.notificationService.error(errorMessage)
+
           switch (err.internalCode) {
             case 4000:
               // this.loggingSerivce.info(err.internalCode.toString(), this.name, operationName)
@@ -131,6 +139,7 @@ export class GraphQLModule {
       }
       if (networkError) {
         this.loggingSerivce.error('networkError', this.name, operationName, networkError)
+        this.notificationService.error(networkError.message)
       }
     }
 

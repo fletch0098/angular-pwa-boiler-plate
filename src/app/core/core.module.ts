@@ -29,12 +29,14 @@ import { HomeService } from './services/home.service'
 import { LoggingService } from './services/logging.service'
 import { NotificationService } from './services/notification.service'
 import { UtilityService } from './services/utility.service'
+import { UserService } from './services/user.service'
 
 @NgModule({
   imports: [CommonModule, MaterialModule, HttpClientModule, RouterModule, GraphQLModule, FlexLayoutModule],
   declarations: [AppLoaderComponent, BlankComponent, FullLayoutComponent, MenuLayoutComponent, ConfirmComponent],
   exports: [AppLoaderComponent, BlankComponent, FullLayoutComponent, MenuLayoutComponent, ConfirmComponent],
   providers: [
+    UserService,
     AppLoaderService,
     AuthStorageService,
     LocalStorageService,

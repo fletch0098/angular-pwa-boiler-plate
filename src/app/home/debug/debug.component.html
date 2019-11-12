@@ -1,0 +1,53 @@
+<h1 class="mat-display-1">Debug</h1>
+
+<div *ngIf="appResponse">
+  <span class="mat-body">Api name: {{ appResponse.appName }}</span>
+  <br />
+  <span class="mat-body">Api version: {{ appResponse.appVersion }}</span>
+  <br />
+  <span class="mat-body">Current server time: {{ appResponse.currentTime }}</span>
+  <br />
+  <span class="mat-body">GraphQl Playground: {{ appResponse.graphQLPlayground }}</span>
+  <br />
+</div>
+
+<div>
+  <button mat-raised-button color="primary" (click)="onStart()">Show Loader</button>
+</div>
+
+<br />
+<div>
+  <button mat-raised-button color="primary" (click)="successNotification()">Success</button>
+</div>
+
+<br />
+<div>
+  <button mat-raised-button color="accent" (click)="warnNotification()">Warn</button>
+</div>
+
+<br />
+<div>
+  <button mat-raised-button color="warn" (click)="errorNotification()">Error</button>
+</div>
+
+<br />
+<div>
+  <button mat-raised-button (click)="infoNotification()">Info</button>
+</div>
+
+<br />
+<div>
+  <button mat-raised-button (click)="confirm()">Confirm</button>
+</div>
+
+<br />
+<div>
+  <mat-form-field>
+    <mat-label>Error to throw</mat-label>
+    <mat-select [(value)]="selectedError">
+      <mat-option *ngFor="let error of errorList" [value]="error.code"> {{ error.name }} </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button (click)="error()">Error</button>
+</div>

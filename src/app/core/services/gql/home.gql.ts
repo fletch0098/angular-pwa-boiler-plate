@@ -16,3 +16,9 @@ export const STATUS = gql`
     status
   }
 `
+
+export const ERROR = gql`
+  mutation Error($input: ErrorInput!) {
+    Error(input: $input)
+  }
+`
