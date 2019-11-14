@@ -37,6 +37,10 @@ export class AppLoaderService {
           this.notificationService.error(this.vars.requestTimeoutMessage)
         }
       }, this.vars.requestTimeout)
+
+      this.loggingService.warn('Loader started for the first time and timeout set for: ' + this.vars.requestTimeout + 'ms', this.name, operation, {
+        requestCount: this.requestCount,
+      })
     }
 
     this.requestCount++

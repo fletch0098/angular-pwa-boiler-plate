@@ -12,12 +12,13 @@ import { LoginResponse } from '../../shared/models/loginResponse.interface'
 import { ApiError } from '../../shared/models/api-error.interface'
 
 import { AuthStorageService } from './auth-storage.service'
+import { UserService } from './user.service'
 
 // import * as jwt from 'jsonwebtoken'
 
 @Injectable()
 export class AuthService {
-  constructor(private apollo: Apollo, private vars: Vars, private authStorageService: AuthStorageService) {
+  constructor(private apollo: Apollo, private vars: Vars, private authStorageService: AuthStorageService, private userservice: UserService) {
     this.loggedInSubject = new BehaviorSubject<boolean>(this.authStorageService.getAuthorizationCredentials() ? true : false)
     this.loggedIn = this.loggedInSubject.asObservable()
   }
@@ -51,10 +52,13 @@ export class AuthService {
           this.authStorageService.setAuthorizationCredentials(response)
           this.loggedInSubject.next(true)
 
+          this.userservice.getloggedInUser().subscribe(user => {
+            console.log(user)
+            return result
+          })
+
           // let decoded = jwt.decode(response.jwtBearer)
           // console.log(decoded)
-
-          return result
         })
         // catchError(this.handleError)
       )

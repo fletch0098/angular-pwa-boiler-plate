@@ -14,25 +14,29 @@ import { User } from '../../shared/models/user.model'
 @Injectable()
 export class UserService {
   constructor(private apollo: Apollo, private vars: Vars) {
-    // this.loggedInSubject = new BehaviorSubject<boolean>(this.authStorageService.getAuthorizationCredentials() ? true : false)
-    // this.loggedIn = this.loggedInSubject.asObservable()
+    this.loggedInUserSubject = new BehaviorSubject<User>(null)
+    this.loggedInUser = this.loggedInUserSubject.asObservable()
   }
 
-  // private loggedInSubject: BehaviorSubject<boolean>
-  // public loggedIn: Observable<boolean>
+  private loggedInUserSubject: BehaviorSubject<User>
+  public loggedInUser: Observable<User>
 
-  // public get loggedInValue(): boolean {
-  //   return this.loggedInSubject.value
-  // }
+  public get loggedInUserValue(): User {
+    return this.loggedInUserSubject.value
+  }
 
-  loggedInUser(): Observable<any> {
+  getloggedInUser(): Observable<User> {
     return this.apollo
       .watchQuery({
         query: LOGGED_IN_USER,
       })
       .valueChanges.pipe(
         tap(_ => console.log('Fetched Logged in user')),
-        map(result => result.data && result.data['LoggedInUser'])
+        map(result => {
+          let user = result.data && result.data['LoggedInUser']
+          this.loggedInUserSubject.next(user)
+          return user
+        })
         // catchError(this.handleError)
       )
   }

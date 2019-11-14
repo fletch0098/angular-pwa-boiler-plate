@@ -1,53 +1,41 @@
-<h1 class="mat-display-1">Debug</h1>
+<h1>Debug</h1>
 
 <div *ngIf="appResponse">
-  <span class="mat-body">Api name: {{ appResponse.appName }}</span>
+  <span class="mat-body"><strong>name: </strong>{{ appResponse.appName }}</span>
   <br />
-  <span class="mat-body">Api version: {{ appResponse.appVersion }}</span>
+  <span class="mat-body"><strong>Api version: </strong> {{ appResponse.appVersion }}</span>
   <br />
-  <span class="mat-body">Current server time: {{ appResponse.currentTime }}</span>
+  <span class="mat-body"><strong>Current server time: </strong> {{ appResponse.currentTime }}</span>
   <br />
-  <span class="mat-body">GraphQl Playground: {{ appResponse.graphQLPlayground }}</span>
-  <br />
+  <span class="mat-body"><strong>GraphQl Playground: </strong> <a href="{{ appResponse.graphQLPlayground }}">GraphQl</a></span>
 </div>
 
+<h3>App Loader</h3>
 <div>
   <button mat-raised-button color="primary" (click)="onStart()">Show Loader</button>
 </div>
 
-<br />
+<h3>Notifications</h3>
 <div>
-  <button mat-raised-button color="primary" (click)="successNotification()">Success</button>
+  <button class="button-in-row" mat-raised-button (click)="infoNotification()">Info</button>
+  <button class="button-in-row" mat-raised-button color="primary" (click)="successNotification()">Success</button>
+  <button class="button-in-row" mat-raised-button color="accent" (click)="warnNotification()">Warn</button>
+  <button class="button-in-row" mat-raised-button color="warn" (click)="errorNotification()">Error</button>
 </div>
 
-<br />
+<h3>Confirm Prompt</h3>
 <div>
-  <button mat-raised-button color="accent" (click)="warnNotification()">Warn</button>
+  <button mat-raised-button color="accent" (click)="confirm()">Confirm</button>
 </div>
 
-<br />
+<h3>Test Errors</h3>
 <div>
-  <button mat-raised-button color="warn" (click)="errorNotification()">Error</button>
-</div>
-
-<br />
-<div>
-  <button mat-raised-button (click)="infoNotification()">Info</button>
-</div>
-
-<br />
-<div>
-  <button mat-raised-button (click)="confirm()">Confirm</button>
-</div>
-
-<br />
-<div>
-  <mat-form-field>
-    <mat-label>Error to throw</mat-label>
-    <mat-select [(value)]="selectedError">
+  <mat-form-field style="width: 100%;">
+    <mat-label>Throw</mat-label>
+    <mat-select [(value)]="selectedError" style="width: 100%;">
       <mat-option *ngFor="let error of errorList" [value]="error.code"> {{ error.name }} </mat-option>
     </mat-select>
   </mat-form-field>
 
-  <button mat-raised-button (click)="error()">Error</button>
+  <button mat-raised-button color="warn" (click)="error()">Error</button>
 </div>

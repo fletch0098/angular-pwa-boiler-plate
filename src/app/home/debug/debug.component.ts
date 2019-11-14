@@ -90,7 +90,6 @@ export class DebugComponent implements OnInit {
     let operation: string = 'onStart'
     this.loggingService.trace(this.name, operation)
     this.appLoaderService.startRequest()
-    this.appLoaderService.startRequest()
 
     setTimeout(() => {
       this.appLoaderService.endRequest()

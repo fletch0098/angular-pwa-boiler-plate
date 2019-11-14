@@ -10,14 +10,14 @@
 
     <span class="menu-spacer"></span>
 
-    <button mat-icon-button [matMenuTriggerFor]="auth">
+    <a *ngIf="!isAuthenticated" mat-menu-item routerLink="/auth/login">
+      <!-- <mat-icon>person</mat-icon> -->
+      <span>Sign in</span></a
+    >
+    <button *ngIf="isAuthenticated" mat-icon-button [matMenuTriggerFor]="auth">
       <mat-icon>account_box</mat-icon>
     </button>
     <mat-menu #auth="matMenu">
-      <a *ngIf="!isAuthenticated" mat-menu-item routerLink="/auth/login">
-        <mat-icon>person</mat-icon>
-        <span>Sign in</span></a
-      >
       <a *ngIf="isAuthenticated" mat-menu-item routerLink="/dashboard/profile">
         <mat-icon>person</mat-icon>
         <span>Profile</span></a
@@ -35,10 +35,46 @@
       <nav>
         <mat-list>
           <mat-list-item *ngFor="let route of nav">
-            <a mat-button routerLink="{{ route.path }}" routerLinkActive="active">
-              <mat-icon class="menu-icon">{{ route.icon }}</mat-icon
-              >{{ route.title }}</a
-            >
+            <div *ngIf="!route.children">
+              <a mat-button routerLink="{{ route.path }}" routerLinkActive="active">
+                <mat-icon class="menu-icon">{{ route.icon }}</mat-icon
+                >{{ route.title }}</a
+              >
+            </div>
+            <div *ngIf="route.children">
+              <!-- <button mat-button [matMenuTriggerFor]="route.title">{{ route.title }}</button>
+
+              <mat-menu #route.title="matMenu">
+                <a mat-button routerLink="{{ route.path }}" routerLinkActive="active">
+                  <mat-icon class="menu-icon">{{ route.icon }}</mat-icon
+                  >{{ route.title }}</a
+                >
+
+              </mat-menu> -->
+
+              <button mat-button [matMenuTriggerFor]="route_menu">
+                <mat-icon class="menu-icon">menu</mat-icon>
+                {{ route.title }}
+              </button>
+
+              <mat-menu #route_menu="matMenu">
+                <mat-list>
+                  <mat-list-item>
+                    <a mat-button routerLink="{{ route.path }}" routerLinkActive="active">
+                      <mat-icon class="menu-icon">{{ route.icon }}</mat-icon
+                      >{{ route.title }}</a
+                    ></mat-list-item
+                  >
+
+                  <mat-list-item>
+                    <a *ngFor="let subRoute of route.children" mat-button routerLink="{{ subRoute.path }}" routerLinkActive="active">
+                      <mat-icon class="menu-icon">{{ subRoute.icon }}</mat-icon
+                      >{{ subRoute.title }}</a
+                    >
+                  </mat-list-item>
+                </mat-list>
+              </mat-menu>
+            </div>
           </mat-list-item>
         </mat-list>
       </nav>

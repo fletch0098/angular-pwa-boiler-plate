@@ -60,7 +60,8 @@ export class LogInComponent {
     this.authService.login(credentials).subscribe(
       result => {
         this.loggingService.info('User logged in successfully', this.name, operation, result)
-        this.notificationService.warn('Logged in successfully')
+        this.notificationService.info('Logged in successfully')
+
         this._router.navigate(['dashboard', 'profile'])
       },
       err => {
