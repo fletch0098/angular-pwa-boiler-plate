@@ -1,1 +1,23 @@
 <h1>Profile</h1>
+
+<div *ngIf="user">
+  <h3>User Info</h3>
+  <span class="mat-body"><strong>id: </strong>{{ user.id }}</span> <br />
+  <span class="mat-body"><strong>username: </strong>{{ user.username }}</span> <br />
+
+  <h3>Roles</h3>
+  <mat-list>
+    <mat-list-item *ngFor="let role of user.roles">
+      {{ role.name }}
+    </mat-list-item>
+  </mat-list>
+
+  <h3>Tokens</h3>
+  <mat-list>
+    <mat-list-item *ngFor="let token of user.tokens">
+      <span class="mat-body"
+        ><strong>{{ token.tokenType }}: </strong>{{ token.expiresAt }}</span
+      >
+    </mat-list-item>
+  </mat-list>
+</div>

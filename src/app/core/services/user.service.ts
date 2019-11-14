@@ -33,7 +33,7 @@ export class UserService {
       .valueChanges.pipe(
         tap(_ => console.log('Fetched Logged in user')),
         map(result => {
-          let user = result.data && result.data['LoggedInUser']
+          let user = new User().deserialize(result.data['LoggedInUser'])
           this.loggedInUserSubject.next(user)
           return user
         })
@@ -48,7 +48,8 @@ export class UserService {
       })
       .valueChanges.pipe(
         tap(_ => console.log('Fetched Users')),
-        map(result => result.data && result.data['User'])
+        map(data => data.data['User'].map(data => new User().deserialize(data)))
+
         // catchError(this.handleError)
       )
   }
