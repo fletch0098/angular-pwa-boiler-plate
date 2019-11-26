@@ -8,11 +8,13 @@ import { onError } from 'apollo-link-error'
 import { setContext } from 'apollo-link-context'
 import { Vars } from './vars'
 import { AuthService } from './services/auth.service'
+import { UserService } from './services/user.service'
 import { LoggingService } from './services/logging.service'
 import { NotificationService } from './services/notification.service'
 import { AuthStorageService } from './services/auth-storage.service'
 import { Observable, Subscription, throwError, BehaviorSubject } from 'rxjs'
 import { map, tap, catchError, switchMap, filter, take } from 'rxjs/operators'
+import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
 
 import { ApiError } from '../shared/models/api-error.interface'
 
@@ -31,9 +33,11 @@ export class GraphQLModule {
     private httpLink: HttpLink,
     private vars: Vars,
     private authService: AuthService,
+    private userService: UserService,
     private authStorageService: AuthStorageService,
     private loggingSerivce: LoggingService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private router: Router
   ) {
     const setAuthorization = async (_, { clientAwareness, headers }) => {
       let operation: string = 'constructor.setAuthorization'
@@ -61,6 +65,9 @@ export class GraphQLModule {
                   })
                 )
                 .toPromise()
+                .then(_ => {
+                  this.userService.getloggedInUser().toPromise()
+                })
             } else {
               jwtBearer = await this.refreshTokenSubject
                 .pipe(
@@ -118,6 +125,7 @@ export class GraphQLModule {
               break
             case 4001:
               // this.loggingSerivce.info(err.internalCode.toString(), this.name, operationName)
+              this.router.navigate(['/auth/login'], {})
               break
             case 4003:
               // this.loggingSerivce.info(err.internalCode.toString(), this.name, operationName)

@@ -56,11 +56,7 @@ export class AuthService {
             console.log(user)
             return result
           })
-
-          // let decoded = jwt.decode(response.jwtBearer)
-          // console.log(decoded)
         })
-        // catchError(this.handleError)
       )
   }
 
@@ -82,8 +78,7 @@ export class AuthService {
         map(result => {
           let response: boolean = result.data['CheckToken']
           return response
-        }),
-        catchError(this.handleError)
+        })
       )
   }
 
@@ -108,8 +103,7 @@ export class AuthService {
           x.jwtBearer = response.jwtBearer
           this.authStorageService.setAuthorizationCredentials(x)
           return response
-        }),
-        catchError(this.handleError)
+        })
       )
   }
 
@@ -119,21 +113,5 @@ export class AuthService {
   logOut(): void {
     this.authStorageService.clearAuthorizationCredentials()
     this.loggedInSubject.next(false)
-  }
-
-  handleError(error) {
-    let errorMessage = ''
-    if (error.error instanceof ErrorEvent) {
-      // client-side error
-      console.log('client side error', error)
-      errorMessage = `Error: ${error.error.message}`
-    } else {
-      // server-side error
-      console.log('server side error', error)
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`
-    }
-    return throwError(error)
-    //window.alert(errorMessage)
-    // return error
   }
 }
