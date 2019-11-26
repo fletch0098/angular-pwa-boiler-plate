@@ -17,4 +17,6 @@ export class Vars {
 
   requestTimeout: number = 30000
   requestTimeoutMessage: string = 'You request has timed out'
+
+  dateFormat: string = 'MMMM Do YYYY, h:mm:ss a'
 }
